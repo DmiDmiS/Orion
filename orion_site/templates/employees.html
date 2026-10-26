@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Сотрудники — ЖК Орион{% endblock %}
+{% block content %}
+<div class="bar">Сотрудники</div>
+<table class="table">
+  <thead><tr><th>Логин</th><th>E-mail</th></tr></thead>
+  <tbody>{% for p in people %}<tr><td>{{ p.get_username }}</td><td>{{ p.email|default:"—" }}</td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}

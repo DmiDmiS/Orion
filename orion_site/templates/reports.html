@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Отчёты — ЖК Орион{% endblock %}
+{% block content %}
+<div class="charts">
+  <section>
+    <button class="btn-primary sm" type="button" data-save="chart-contracts" data-file="statistika-dogovorov.png">Сохранить</button>
+    <canvas id="chart-contracts"></canvas>
+  </section>
+  <section>
+    <button class="btn-primary sm" type="button" data-save="chart-sales" data-file="dvizhenie-prodazh.png">Сохранить</button>
+    <canvas id="chart-sales"></canvas>
+  </section>
+</div>
+{{ chart_data|json_script:"chart-data" }}
+{% endblock %}

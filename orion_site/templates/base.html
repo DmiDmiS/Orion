@@ -1,0 +1,50 @@
+{% load static %}<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}ЖК Орион{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+{% block nav %}
+<nav class="topbar no-print">
+  <a class="brand" href="{% url 'home' %}">Орион</a>
+  <div class="nav-right">
+    <form class="search" action="{% url 'catalog' %}" method="get">
+      <input type="search" name="q" placeholder="Поиск" value="{{ q|default:'' }}">
+      <button class="btn-light" type="submit">Поиск</button>
+    </form>
+    <a href="{% url 'favorites' %}">Избранное</a>
+    {% if user.is_authenticated %}
+      <span class="who">{{ user.get_username }}</span>
+      <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="linklike" type="submit">Выйти</button></form>
+    {% else %}
+      <a href="{% url 'login' %}">Войти</a>
+      <a href="{% url 'register' %}">Регистрация</a>
+    {% endif %}
+  </div>
+</nav>
+{% endblock %}
+{% if messages %}
+<div class="messages no-print">{% for m in messages %}<div class="msg {{ m.tags }}">{{ m }}</div>{% endfor %}</div>
+{% endif %}
+<div class="layout">
+  {% if sidebar %}
+  <aside class="sidebar no-print">
+    <a href="{% url 'home' %}">Главная</a>
+    <a href="{% url 'catalog' %}">Каталог</a>
+    <a href="{% url 'management' %}">Управляющая компания</a>
+    {% if user.is_staff %}
+      <a href="{% url 'employees' %}">Сотрудники</a>
+      <a href="{% url 'requests' %}">Заявки</a>
+      <a href="{% url 'contracts' %}">Контракты</a>
+      <a href="{% url 'reports' %}">Отчёты</a>
+    {% endif %}
+  </aside>
+  {% endif %}
+  <main class="content">{% block content %}{% endblock %}</main>
+</div>
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

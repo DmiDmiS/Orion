@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Заявки — ЖК Орион{% endblock %}
+{% block content %}
+<div class="bar">Заявки</div>
+<table class="table">
+  <thead><tr><th>Номер заявки</th><th>E-mail клиента</th><th>Номер квартиры</th><th>Договор</th></tr></thead>
+  <tbody>
+  {% for r in items %}
+    <tr>
+      <td>{{ r.pk }}</td><td>{{ r.email }}</td><td>{{ r.apartment_id }}</td>
+      <td>{% if r.contract %}Договор №{{ r.contract.pk }}{% else %}<a class="uplink" href="{% url 'contract_create' r.pk %}">СОСТАВИТЬ ДОГОВОР</a>{% endif %}</td>
+    </tr>
+  {% empty %}<tr><td colspan="4">Заявок пока нет.</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

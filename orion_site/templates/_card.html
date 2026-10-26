@@ -1,0 +1,19 @@
+{% load static %}
+<article class="apt">
+  <img src="{% if a.image %}{{ a.image.url }}{% else %}{% static 'img/apt1.jpg' %}{% endif %}" alt="{{ a.address }}">
+  <div class="apt-body">
+    <h3>{{ a.address }}</h3>
+    <p>Площадь: {{ a.area }} кв м</p>
+    <p>Количество комнат: {{ a.rooms }}</p>
+    <p>Цена: {{ a.price }} рублей</p>
+    <div class="actions">
+      <a class="btn-primary sm" href="{% url 'book' a.pk %}">Забронировать</a>
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'favorite_toggle' a.pk %}">{% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button class="btn-light sm" type="submit">{% if a.pk in fav_ids %}★ В избранном{% else %}☆ В избранное{% endif %}</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</article>

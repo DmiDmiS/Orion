@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Избранное — ЖК Орион{% endblock %}
+{% block content %}
+<div class="catalog single">
+  <section class="results">
+    <h2>Избранное</h2>
+    {% for a in apartments %}{% include '_card.html' %}
+    {% empty %}<p>Здесь пока пусто. Добавляйте понравившиеся квартиры из <a href="{% url 'catalog' %}">каталога</a>.</p>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

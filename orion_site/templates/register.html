@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Регистрация — ЖК Орион{% endblock %}
+{% block body_class %}bg-building{% endblock %}
+{% block nav %}{% endblock %}
+{% block content %}
+<div class="panel glass">
+  <h2>ЖК Орион</h2>
+  <form method="post">{% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for f in form %}<label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{{ f.errors }}{% endfor %}
+    <div class="btns"><button class="btn-primary" type="submit">Зарегистрироваться</button><a class="btn-danger" href="{% url 'home' %}">Отмена</a></div>
+    <p class="hint">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+  </form>
+</div>
+{% endblock %}

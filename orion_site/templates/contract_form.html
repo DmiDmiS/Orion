@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Составление договора — ЖК Орион{% endblock %}
+{% block body_class %}bg-building{% endblock %}
+{% block nav %}{% endblock %}
+{% block content %}
+<div class="panel glass">
+  <h2>ЖК Орион</h2>
+  <form method="post">{% csrf_token %}
+    <label for="id_employee_code">Код сотрудника</label>{{ form.employee_code }}{{ form.employee_code.errors }}
+    <label>Номер клиента в БД</label><input readonly value="{{ req.client_id|default:'—' }}">
+    <label for="id_signed_date">Дата составления</label>{{ form.signed_date }}{{ form.signed_date.errors }}
+    <label for="id_status">Статус</label>{{ form.status }}
+    <label>Номер заявки</label><input readonly value="{{ req.pk }}">
+    <label>Итоговая стоимость</label><input readonly value="{{ req.apartment.price }}">
+    <div class="btns"><button class="btn-primary" type="submit">Отправить</button><a class="btn-danger" href="{% url 'requests' %}">Отмена</a></div>
+  </form>
+</div>
+{% endblock %}

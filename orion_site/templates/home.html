@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="home">
+  <h1>ЖК Орион</h1>
+  <p>Добро пожаловать на сайт жилого комплекса «Орион». Здесь можно выбрать квартиру или апартаменты, забронировать понравившийся вариант и связаться с управляющей компанией.</p>
+  <p>Подробные характеристики, площади и цены собраны в <a href="{% url 'catalog' %}">каталоге</a>. Жильцы могут зарегистрироваться, сохранять варианты в избранное и оставлять заявки.</p>
+  <h2>Квартиры и апартаменты</h2>
+  <div class="gallery">
+    {% for p in photos %}<img src="{{ p.image.url }}" alt="Квартира {{ forloop.counter }}">
+    {% empty %}{% for n in '123456' %}<img src="{% static 'img/apt' %}{{ n }}.jpg" alt="Квартира {{ n }}">{% endfor %}{% endfor %}
+  </div>
+  <h2>Социальные сети</h2>
+  <div class="socials">
+    <a href="https://t.me/" rel="noopener">
+      <svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><circle cx="24" cy="24" r="24" fill="#2aabee"/><path d="M10 23.500l27-11-5 22.500-8.500-6.500-4.500 4.200v-7.200l14.500-12.800-18 10.800z" fill="#fff"/></svg>
+      <span>Телеграм-канал</span></a>
+    <a href="https://vk.com/" rel="noopener">
+      <svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0077ff"/><text x="24" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="#fff">VK</text></svg>
+      <span>ВКонтакте</span></a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Бронирование — ЖК Орион{% endblock %}
+{% block body_class %}bg-building{% endblock %}
+{% block nav %}{% endblock %}
+{% block content %}
+<div class="panel glass">
+  <h2>ЖК Орион</h2>
+  <form method="post">{% csrf_token %}
+    <label for="id_email">E-mail</label>
+    {{ form.email }}{{ form.email.errors }}
+    <label>Количество комнат</label><input readonly value="{{ apt.rooms }}">
+    <label>Площадь кв.м</label><input readonly value="{{ apt.area }} кв м">
+    <label>Стоимость</label><input readonly value="{{ apt.price }} рублей">
+    <div class="btns"><button class="btn-primary" type="submit">Отправить</button><a class="btn-danger" href="{% url 'catalog' %}">Отмена</a></div>
+  </form>
+</div>
+{% endblock %}

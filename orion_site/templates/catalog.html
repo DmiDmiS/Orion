@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Каталог — ЖК Орион{% endblock %}
+{% block content %}
+<div class="catalog">
+  <form class="filter no-print" method="get" action="{% url 'catalog' %}">
+    <h3>Фильтр</h3>
+    <input type="hidden" name="q" value="{{ q }}">
+    <label for="rooms">Количество комнат</label>
+    <input id="rooms" type="number" min="1" name="rooms" value="{{ rooms }}">
+    <label class="check"><input type="checkbox" name="area" value="50-100" {% if '50-100' in area %}checked{% endif %}> 50-100 кв.м</label>
+    <label class="check"><input type="checkbox" name="area" value="100-150" {% if '100-150' in area %}checked{% endif %}> 100-150 кв.м</label>
+    <button class="btn-light" type="submit">Применить</button>
+  </form>
+  <section class="results">
+    {% if count %}
+      <h2>По вашему запросу найдено {{ count }} {{ word }}:</h2>
+      {% for a in apartments %}{% include '_card.html' %}{% endfor %}
+    {% else %}
+      <h2>По вашему запросу ничего не найдено</h2>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
