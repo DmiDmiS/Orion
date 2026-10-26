@@ -38,10 +38,5 @@ python manage.py runserver
 | `/reports/` | Диаграммы на canvas с кнопками «Сохранить» (PNG) |
 | `/contracts/` | Контракты и печать (одного договора или списка) |
 | `/login/`, `/register/`, `/favorites/` | Вход, регистрация жильцов, избранное |
-
-## Что заменить своим
-
-- Фото квартир: загрузите в админке (Apartment → Фото). Сейчас в `static/img/` лежат 4 ваши фотографии (apt1–apt7.jpg — повторяются по кругу). Замените файлы или загрузите свои в админке.
-- Фон форм: `static/img/building.jpg`.
 - Ссылки на Telegram и ВК: `templates/home.html`.
 - Тексты на главной и в «Управляющей компании»: `templates/home.html`, `templates/management.html`.
