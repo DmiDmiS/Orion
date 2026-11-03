@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('1. Подготовка кода') {
+            steps {
+                echo '=== Очищаем рабочую директорию и скачиваем код ==='
+                deleteDir()
+                // Jenkins сам поймет, какой репозиторий качать, если настроить через SCM
+                checkout scm
+            }
+        }
+
+        stage('2. Тестирование приложения') {
+            steps {
+                echo '=== Запуск тестов Django внутри временного контейнера ==='
+                // Мы запускаем тесты прямо в Docker, чтобы не засорять саму ВМ библиотеками
+                sh 'docker build -t django-test-image -f Dockerfile .'
+                sh 'docker run --rm django-test-image python manage.py test'
+            }
+        }
+
+        stage('3. Сборка боевого образа') {
+            steps {
+                echo '=== Сборка финального Docker-образа ==='
+                // Собираем чистый образ для деплоя
+                sh 'docker build -t my-django-app:latest .'
+            }
+        }
+
+        stage('4. Деплой и Миграции') {
+            steps {
+                echo '=== Перезапуск контейнера и обновление БД ==='
+                sh '''
+                    # Останавливаем старый контейнер, если он был
+                    docker rm -f django-site-container 2>/dev/null || true
+                    
+                    # Запускаем новый контейнер в фоновом режиме
+                    docker run -d --name django-site-container -p 8000:8000 my-django-app:latest
+                    
+                    # Прямо внутри запущенного контейнера применяем миграции
+                    docker exec django-site-container python manage.py migrate --noinput
+                    
+                    # Собираем статические файлы (картинки, стили)
+                    docker exec django-site-container python manage.py collectstatic --noinput
+                '''
+            }
+        }
+    }
+}
