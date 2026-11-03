@@ -7,7 +7,6 @@
   <p>Подробные характеристики, площади и цены собраны в <a href="{% url 'catalog' %}">каталоге</a>. Жильцы могут зарегистрироваться, сохранять варианты в избранное и оставлять заявки.</p>
   <h2>Квартиры и апартаменты</h2>
   <div class="gallery">
-    {% for p in photos %}<img src="{{ p.image.url }}" alt="Квартира {{ forloop.counter }}">
     {% empty %}{% for n in '123456' %}<img src="{% static 'img/apt' %}{{ n }}.jpg" alt="Квартира {{ n }}">{% endfor %}{% endfor %}
   </div>
   <h2>Социальные сети</h2>
